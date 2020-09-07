@@ -1,8 +1,8 @@
 /* eslint-env jest */
 import * as React from "react";
-import reactFromMarkupContainer from "..";
+import reactFromHtml from "..";
 
-describe("reactFromMarkupContainer E2E tests", async () => {
+describe("reactFromHtml E2E tests", async () => {
   it("Should rehydrate a basic component", async () => {
     const componentName: string = "myComponent";
 
@@ -13,63 +13,46 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     const rehydrators = { [componentName]: rehydrator };
     const documentElement = document.createElement("div");
 
-    documentElement.innerHTML = `
-      <div data-react-from-html-container>
-        <div data-rehydratable="${componentName}"></div>
-      </div>`;
+    documentElement.innerHTML = `<div data-rehydratable="${componentName}"></div>`;
 
-    await reactFromMarkupContainer(documentElement, rehydrators, {
+    await reactFromHtml(documentElement, rehydrators, {
       extra: {},
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
   });
 
-  it("Should rehydrate valid HTML markup", async () => {
-    const documentElement = document.createElement("div");
-
-    documentElement.innerHTML = `
-    <div data-react-from-html-container>
-      <p>paragraph</p>
-    </div>`;
-
-    await reactFromMarkupContainer(documentElement, {}, { extra: {} });
-
-    expect(documentElement.innerHTML).toMatchSnapshot();
-  });
-
-  it("Should work for nested markup containers", async () => {
+  it("Should work for nested rehydratables", async () => {
     const componentName: string = "mycomponentName";
 
     const mockCall = jest.fn();
     const rehydrators = {
-      [componentName]: async () => {
+      [componentName]: async (node: HTMLElement) => {
         mockCall();
 
-        return React.createElement("span", {}, "rehydrated component");
+        await reactFromHtml(node, rehydrators, { extra: {} });
+
+        return React.createElement("span", {
+          dangerouslySetInnerHTML: { __html: node.innerHTML },
+        });
       },
     };
 
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-      <div data-react-from-html-container>
-        <div data-rehydratable="${componentName}"></div>
-          <div data-react-from-html-container>
-            <div data-rehydratable="${componentName}">
-              <div data-react-from-html-container>
-                <div data-rehydratable="${componentName}"></div>
-              </div>
-            </div>
-            <div data-rehydratable="${componentName}"></div>
-          </div>
-      </div>`;
+      <div data-rehydratable="${componentName}">
+        <div data-rehydratable="${componentName}">
+          Hello, World!
+        </div>
+      </div>
+      `;
 
-    await reactFromMarkupContainer(documentElement, rehydrators, {
+    await reactFromHtml(documentElement, rehydrators, {
       extra: {},
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
-    expect(mockCall).toBeCalledTimes(3);
+    expect(mockCall).toBeCalledTimes(2);
   });
 });
