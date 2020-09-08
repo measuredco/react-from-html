@@ -2,6 +2,8 @@
 
 exports[`reactFromHtml E2E tests Should rehydrate a basic component 1`] = `"<div class=\\"rehydration-root\\"><span>rehydrated component</span></div>"`;
 
+exports[`reactFromHtml E2E tests Should rehydrate components with custom query selectors 1`] = `"<div class=\\"rehydration-root\\"><span>rehydrated component</span></div>"`;
+
 exports[`reactFromHtml E2E tests Should work for nested rehydratables 1`] = `
 "
       <div class=\\"rehydration-root\\"><span>
