@@ -51,4 +51,24 @@ describe("reactFromHtml E2E tests", async () => {
     expect(documentElement.innerHTML).toMatchSnapshot();
     expect(mockCall).toBeCalledTimes(2);
   });
+
+  it("Should rehydrate components with custom query selectors", async () => {
+    const componentName: string = "myComponent";
+
+    const rehydrator = async () => {
+      return React.createElement("span", {}, "rehydrated component");
+    };
+
+    const rehydrators = { [componentName]: rehydrator };
+    const documentElement = document.createElement("div");
+
+    documentElement.innerHTML = `<div class="test-${componentName}"></div>`;
+
+    await reactFromHtml(documentElement, rehydrators, {
+      extra: {},
+      getQuerySelector: key => `.test-${key}`,
+    });
+
+    expect(documentElement.innerHTML).toMatchSnapshot();
+  });
 });
