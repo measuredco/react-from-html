@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Convert the children of a node to React elements",
   "main": "lib/index.js",
-  "author": "Simon Andrews <me@simonandrews.ca>",
+  "author": "Measured Co. <hello@measured.co>",
   "license": "MIT",
   "scripts": {
     "compile": "tsc"
