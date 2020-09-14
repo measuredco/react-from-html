@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "lib",
     "declaration": true,
     "jsx": "react",
     "module": "commonjs",
@@ -14,5 +15,7 @@
     "noFallthroughCasesInSwitch": true,
 
     "lib": ["es2017", "dom"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["src/**/__tests__"]
 }

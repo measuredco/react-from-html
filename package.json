@@ -1,25 +1,22 @@
 {
-  "name": "react-from-html-workspace",
+  "name": "react-from-html",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "author": "Measured Co. <hello@measured.co>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "compile": "lerna run compile",
+    "compile": "tsc",
     "cz": "git-cz",
     "format": "prettier **/*.js **/*.ts !**/lib/** --write",
     "postinstall": "npm-run-all compile",
     "lint": "npm-run-all lint:*",
     "lint:ts": "tslint -c tslint.json './packages/**/*.ts*(x)'",
-    "release": "lerna version prerelease",
     "pretest": "npm-run-all lint",
     "test": "jest"
   },
   "dependencies": {
-    "husky": "^1.2.1",
-    "react": "^16.5.0",
-    "react-dom": "^16.5.0"
+    "husky": "^1.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^7.2.1",
@@ -32,14 +29,19 @@
     "cz-conventional-changelog": "2.1.0",
     "gh-pages": "^2.0.0",
     "jest": "^23.5.0",
-    "lerna": "^3.1.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
+    "react": "^16.5.0",
+    "react-dom": "^16.5.0",
     "ts-jest": "^23.1.4",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.17.0",
     "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.0.1"
+  },
+  "peerDependencies": {
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0"
   },
   "husky": {
     "hooks": {
@@ -68,8 +70,5 @@
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
-  },
-  "workspaces": [
-    "packages/*"
-  ]
+  }
 }
