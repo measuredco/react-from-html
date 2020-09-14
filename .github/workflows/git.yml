@@ -1,0 +1,21 @@
+name: Git Checks
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2.0.0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: yarn
+      - run: yarn test
+
+    timeout-minutes: 5
