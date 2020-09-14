@@ -1,6 +1,6 @@
 import * as React from "react";
 import staticToReactElement, {
-  StaticToReactElementRecursor
+  StaticToReactElementRecursor,
 } from "./staticToReactElement";
 
 export type CustomElementHandlerType = (

@@ -187,7 +187,7 @@ const nameMap: INameMap = {
   "xml:lang": "xmlLang",
   "xml:space": "xmlSpace",
   ychannelselector: "yChannelSelector",
-  zoomandpan: "zoomAndPan"
+  zoomandpan: "zoomAndPan",
 };
 
 export default nameMap;

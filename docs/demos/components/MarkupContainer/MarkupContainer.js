@@ -14,17 +14,17 @@ class MarkupContainer extends React.Component {
     children: PropTypes.node,
     options: PropTypes.object,
     rehydrators: PropTypes.object,
-    separateContainers: PropTypes.bool
+    separateContainers: PropTypes.bool,
   };
 
   static defaultProps = {
-    separateContainers: true
+    separateContainers: true,
   };
 
   mainRef = React.createRef();
 
   state = {
-    markup: ""
+    markup: "",
   };
 
   static getDerivedStateFromProps(props) {
@@ -32,12 +32,12 @@ class MarkupContainer extends React.Component {
       return {
         markup: React.Children.map(props.children, child =>
           ReactDOMServer.renderToStaticMarkup(child)
-        )
+        ),
       };
     }
 
     return {
-      markup: [ReactDOMServer.renderToStaticMarkup(props.children)]
+      markup: [ReactDOMServer.renderToStaticMarkup(props.children)],
     };
   }
 
@@ -61,7 +61,7 @@ class MarkupContainer extends React.Component {
         {markup.map((node, i) => (
           <div
             dangerouslySetInnerHTML={{
-              __html: `<div data-react-from-markup-container>${node}</div>`
+              __html: `<div data-react-from-markup-container>${node}</div>`,
             }}
             key={i}
           />

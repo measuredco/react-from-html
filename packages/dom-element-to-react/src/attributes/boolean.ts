@@ -21,5 +21,5 @@ export default [
   "required",
   "reversed",
   "scoped",
-  "seamless"
+  "seamless",
 ];

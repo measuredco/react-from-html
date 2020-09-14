@@ -3,16 +3,16 @@ import PropTypes from "prop-types";
 
 export default class ShowMore extends Component {
   static propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
   };
 
   state = {
-    open: false
+    open: false,
   };
 
   toggleOpen = () => {
     this.setState({
-      open: !this.state.open
+      open: !this.state.open,
     });
   };
 
