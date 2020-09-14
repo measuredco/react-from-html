@@ -8,9 +8,6 @@
   "scripts": {
     "compile": "lerna run compile",
     "cz": "git-cz",
-    "deploy": "yarn docz:build && gh-pages -d .docz/dist",
-    "docz:dev": "docz dev",
-    "docz:build": "docz build",
     "format": "prettier **/*.js **/*.ts !**/lib/** --write",
     "postinstall": "npm-run-all compile",
     "lint": "npm-run-all lint:*",
@@ -33,7 +30,6 @@
     "@types/react-dom": "^16.0.7",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "2.1.0",
-    "docz": "^0.11.2",
     "gh-pages": "^2.0.0",
     "jest": "^23.5.0",
     "lerna": "^3.1.1",
