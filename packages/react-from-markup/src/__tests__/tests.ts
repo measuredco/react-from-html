@@ -14,7 +14,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-      <div data-react-from-markup-container>
+      <div data-react-from-html-container>
         <div data-rehydratable="${componentName}"></div>
       </div>`;
 
@@ -29,7 +29,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-    <div data-react-from-markup-container>
+    <div data-react-from-html-container>
       <p>paragraph</p>
     </div>`;
 
@@ -53,11 +53,11 @@ describe("reactFromMarkupContainer E2E tests", async () => {
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-      <div data-react-from-markup-container>
+      <div data-react-from-html-container>
         <div data-rehydratable="${componentName}"></div>
-          <div data-react-from-markup-container>
+          <div data-react-from-html-container>
             <div data-rehydratable="${componentName}">
-              <div data-react-from-markup-container>
+              <div data-react-from-html-container>
                 <div data-rehydratable="${componentName}"></div>
               </div>
             </div>

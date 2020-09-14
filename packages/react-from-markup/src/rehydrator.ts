@@ -74,7 +74,7 @@ export default async (
 ) => {
   const roots = Array.from(
     // TODO: allow setting a container identifier so multiple rehydration instances can exist
-    container.querySelectorAll("[data-react-from-markup-container]")
+    container.querySelectorAll("[data-react-from-html-container]")
   ).reduce((acc: Element[], root: Element) => {
     // filter roots that are contained within other roots
     if (!acc.some(r => r.contains(root))) {
