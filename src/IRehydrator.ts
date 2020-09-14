@@ -1,11 +1,9 @@
 import * as React from "react";
 
-type RehydrateChildren = (el: Element) => Promise<React.ReactNode>;
-
 export default interface IRehydrator {
   [name: string]: (
     el: Element,
-    rehydrateChildren: RehydrateChildren,
+    rehydrate: (element: Element) => React.ReactNode,
     extra: object
   ) => Promise<React.ReactElement<any>>;
 }

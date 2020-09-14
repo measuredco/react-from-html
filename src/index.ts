@@ -1,1 +1,1 @@
-export { default, rehydrateChildren } from "./rehydrator";
+export { default } from "./rehydrator";

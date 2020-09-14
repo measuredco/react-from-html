@@ -13,15 +13,22 @@ const convertText = (el: Text): string =>
 
 const convertElement = async (
   el: Element,
-  customElementHandler: CustomElementHandlerType,
-  recursor: StaticToReactElementRecursor
-) =>
-  // If customElementHandler is truthy, use it; otherwise, just convert to a React element.
-  (await customElementHandler(el)) || staticToReactElement(el, recursor);
+  recursor: StaticToReactElementRecursor,
+  customElementHandler?: CustomElementHandlerType
+) => {
+  if (customElementHandler) {
+    // If customElementHandler is truthy, use it; otherwise, just convert to a React element.
+    return (
+      (await customElementHandler(el)) || staticToReactElement(el, recursor)
+    );
+  }
+
+  return staticToReactElement(el, recursor);
+};
 
 const convert = async (
   el: Node,
-  customElementHandler: CustomElementHandlerType
+  customElementHandler?: CustomElementHandlerType
 ) => {
   const recursor: StaticToReactElementRecursor = (innerEl: Node) =>
     convert(innerEl, customElementHandler);
@@ -29,7 +36,7 @@ const convert = async (
   if (el.nodeType === Node.TEXT_NODE) {
     return convertText(el as Text);
   } else if (el.nodeType === Node.ELEMENT_NODE) {
-    return convertElement(el as Element, customElementHandler, recursor);
+    return convertElement(el as Element, recursor, customElementHandler);
   }
 
   // Unhandled node type. Probably an HTML comment.

@@ -23,8 +23,10 @@ const rehydratableToReactElement = async (
 
   return rehydrator(
     el,
-    async children =>
-      (await rehydrateChildren(children, rehydrators, options)).rehydrated,
+    async node => {
+      await rehydrate(node, rehydrators, options);
+      return domElementToReact(node);
+    },
     options.extra
   );
 };
@@ -98,7 +100,7 @@ const createQuerySelector = (rehydratableIds: string[]) =>
     ""
   );
 
-export default async (
+const rehydrate = async (
   container: Element,
   rehydrators: IRehydrator,
   options: IOptions
@@ -144,4 +146,6 @@ export default async (
   await Promise.all(renders.map(r => r().then(render)));
 };
 
-export { IRehydrator, rehydratableToReactElement, rehydrateChildren };
+export default rehydrate;
+
+export { IRehydrator, rehydratableToReactElement };
