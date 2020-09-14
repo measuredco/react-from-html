@@ -19,7 +19,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
       </div>`;
 
     await reactFromMarkupContainer(documentElement, rehydrators, {
-      extra: {}
+      extra: {},
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
@@ -47,7 +47,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
         mockCall();
 
         return React.createElement("span", {}, "rehydrated component");
-      }
+      },
     };
 
     const documentElement = document.createElement("div");
@@ -66,7 +66,7 @@ describe("reactFromMarkupContainer E2E tests", async () => {
       </div>`;
 
     await reactFromMarkupContainer(documentElement, rehydrators, {
-      extra: {}
+      extra: {},
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();

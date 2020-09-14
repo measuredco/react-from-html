@@ -82,7 +82,7 @@ const specialElementHandlers: ISpecialElementHandlers = {
     }
 
     return toReturn;
-  }
+  },
 };
 
 export default specialElementHandlers;

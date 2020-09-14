@@ -24,7 +24,7 @@ const bootstrapStyles = (attributes: IAttributeList): IAttributeList => ({
   ...attributes,
 
   ref: makeRefStyleHandler(attributes.style as string),
-  style: undefined
+  style: undefined,
 });
 
 export default async (el: Element, recursor: StaticToReactElementRecursor) => {
@@ -46,7 +46,7 @@ export default async (el: Element, recursor: StaticToReactElementRecursor) => {
       .reduce(
         (acc, { name, value }): IAttributeList => ({
           ...acc,
-          [mapAttributeToReact(name)]: value
+          [mapAttributeToReact(name)]: value,
         }),
         {}
       );

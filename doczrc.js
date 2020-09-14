@@ -5,7 +5,7 @@ export default {
   hashRouter: true,
   themeConfig: {
     colors: {
-      primary: "rgb(98, 66, 137)"
-    }
-  }
+      primary: "rgb(98, 66, 137)",
+    },
+  },
 };

@@ -52,7 +52,7 @@ const rehydrateChildren = (
 
 const render = ({
   rehydrated,
-  root
+  root,
 }: {
   rehydrated?: React.ReactNode;
   root?: Element;
