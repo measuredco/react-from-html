@@ -27,14 +27,10 @@ describe("reactFromHtml E2E tests", async () => {
 
     const mockCall = jest.fn();
     const rehydrators = {
-      [componentName]: async (node: HTMLElement) => {
+      [componentName]: async (el, rehydrate) => {
         mockCall();
 
-        await reactFromHtml(node, rehydrators, { extra: {} });
-
-        return React.createElement("span", {
-          dangerouslySetInnerHTML: { __html: node.innerHTML },
-        });
+        return React.createElement("span", {}, await rehydrate(el));
       },
     };
 

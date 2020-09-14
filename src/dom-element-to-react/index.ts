@@ -3,7 +3,7 @@ import convert, { CustomElementHandlerType } from "./convert";
 
 const rehydrateChildren = async (
   node: Node,
-  customHandler: CustomElementHandlerType
+  customHandler?: CustomElementHandlerType
 ): Promise<React.ReactNode> => {
   if (!node || !node.childNodes) {
     return null;
