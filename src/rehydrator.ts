@@ -1,6 +1,6 @@
-import domElementToReact from "dom-element-to-react";
 import * as ReactDOM from "react-dom";
 
+import domElementToReact from "./dom-element-to-react";
 import IOptions from "./IOptions";
 import IRehydrator from "./IRehydrator";
 
