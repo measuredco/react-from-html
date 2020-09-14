@@ -1,7 +1,7 @@
 import * as React from "react";
 import convert, { CustomElementHandlerType } from "./convert";
 
-const rehydrateChildren = async (
+const domElementToReact = async (
   node: Node,
   customHandler?: CustomElementHandlerType
 ): Promise<React.ReactNode> => {
@@ -18,4 +18,4 @@ const rehydrateChildren = async (
   return React.createElement(React.Fragment, {}, ...children);
 };
 
-export default rehydrateChildren;
+export default domElementToReact;
