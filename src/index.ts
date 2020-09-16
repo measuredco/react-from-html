@@ -1,1 +1,1 @@
-export { default } from "./rehydrator";
+export { default } from "./hydrate";

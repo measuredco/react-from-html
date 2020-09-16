@@ -41,38 +41,38 @@ const ShowMore = ({ content }) => (
 const root = document.querySelector("body");
 
 reactFromHTML(root, {
-  // Map all `.ShowMore` elements using a rehydrator function
+  // Map all `.ShowMore` elements using a hydrator
   ".ShowMore": async el => <ShowMore content={el.dataset.content} />,
 });
 ```
 
 ## API
 
-### `reactFromHTML(root, rehydrators, options)`
+### `reactFromHTML(root, hydrators, options)`
 
 Params:
 
 - **root**: Element - Root element containing your components
-- **rehydrators**: Object - mapping functions
+- **hydrators**: Object - mapping functions
   - **key**: String - The query selector for the component
-  - **value**: Func - A **Rehydrator Function**, describing how to map this element to a React component (see below).
+  - **value**: Func - A **Hydrator Function**, describing how to map this element to a React component (see below).
 - **Options**: Object
-  - **extra**: Object - additional properties passed to each rehydrator functions
+  - **extra**: Object - additional properties passed to each hydrator
   - **getQuerySelector**: (key:String): String - a function for defining custom query selectors for each key
 
-### `rehydrator(el, rehydrate, extra): ReactNode`
+### `hydrator(el, hydrate, extra): ReactNode`
 
 Defined by you for each component you want to convert back into React. It maps an `Element` into a `ReactNode`.
 
 - **el**: Element - the element for this component, as defined by the query selector
-- **rehydrate(el)**: Func - a convenience, prebaked version of `reactFromHTML` used for rehydrating child nodes. For example, converting `innerHTML` into React children.
+- **hydrate(el)**: Func - a convenience, prebaked version of `reactFromHTML` used for hydrating child nodes. For example, converting `innerHTML` into React children.
 - **extra**: Object - additional params as defined in the initial `reactFromHTML()` call.
 
 ## Examples
 
-### Basic rehydration
+### Basic hydration
 
-This example shows rehydration of a basic component, with the single prop `content` that is assigned to a data attribute.
+This example shows hydration of a basic component, with the single prop `content` that is assigned to a data attribute.
 
 #### React
 
@@ -92,7 +92,7 @@ const ShowMore = ({ content }) => (
 </body>
 ```
 
-#### Rehydration
+#### Hydration
 
 ```jsx
 reactFromHTML(document.querySelector("body"), {
@@ -100,9 +100,9 @@ reactFromHTML(document.querySelector("body"), {
 });
 ```
 
-### Advanced rehydration
+### Advanced hydration
 
-This example shows rehydration of a more complex component, with multiple props, and children which may themselves need rehydrating.
+This example shows hydration of a more complex component, with multiple props, and children which may themselves need hydrating.
 
 #### React
 
@@ -136,22 +136,20 @@ const ShowMore = ({ content }) => (
 </body>
 ```
 
-#### Rehydration
+#### Hydration
 
 ```jsx
-const ModalRehydrator = async (el, rehydrate) => (
+const ModalHydrator = async (el, hydrate) => (
   <Modal title={el.querySelector(".Modal-title").innerHTML}>
-    {rehydrate(el.querySelector(".Modal-inner"))}
+    {hydrate(el.querySelector(".Modal-inner"))}
   </Modal>
 );
 
-const ShowMoreRehydrator = async el => (
-  <ShowMore content={el.dataset.content} />
-);
+const ShowMoreHydrator = async el => <ShowMore content={el.dataset.content} />;
 
 reactFromHTML(document.querySelector("body"), {
-  ".Modal": ModalRehydrator,
-  ".ShowMore": ShowMoreRehydrator,
+  ".Modal": ModalHydrator,
+  ".ShowMore": ShowMoreHydrator,
 });
 ```
 

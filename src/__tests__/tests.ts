@@ -3,34 +3,34 @@ import * as React from "react";
 import reactFromHtml from "..";
 
 describe("reactFromHtml E2E tests", async () => {
-  it("Should rehydrate a basic component", async () => {
+  it("Should hydrate a basic component", async () => {
     const componentName: string = "myComponent";
 
-    const rehydrator = async () => {
-      return React.createElement("span", {}, "rehydrated component");
+    const hydrator = async () => {
+      return React.createElement("span", {}, "hydrated component");
     };
 
-    const rehydrators = { [`.${componentName}`]: rehydrator };
+    const hydrators = { [`.${componentName}`]: hydrator };
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `<div class="${componentName}"></div>`;
 
-    await reactFromHtml(documentElement, rehydrators, {
+    await reactFromHtml(documentElement, hydrators, {
       extra: {},
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
   });
 
-  it("Should work for nested rehydratables", async () => {
+  it("Should work for nested hydratables", async () => {
     const componentName: string = "mycomponentName";
 
     const mockCall = jest.fn();
-    const rehydrators = {
-      [`.${componentName}`]: async (el, rehydrate) => {
+    const hydrators = {
+      [`.${componentName}`]: async (el, hydrate) => {
         mockCall();
 
-        return React.createElement("span", {}, await rehydrate(el));
+        return React.createElement("span", {}, await hydrate(el));
       },
     };
 
@@ -44,7 +44,7 @@ describe("reactFromHtml E2E tests", async () => {
       </div>
       `;
 
-    await reactFromHtml(documentElement, rehydrators, {
+    await reactFromHtml(documentElement, hydrators, {
       extra: {},
     });
 
@@ -52,21 +52,21 @@ describe("reactFromHtml E2E tests", async () => {
     expect(mockCall).toBeCalledTimes(2);
   });
 
-  it("Should rehydrate components with custom query selectors", async () => {
+  it("Should hydrate components with custom query selectors", async () => {
     const componentName: string = "myComponent";
 
-    const rehydrator = async () => {
-      return React.createElement("span", {}, "rehydrated component");
+    const hydrator = async () => {
+      return React.createElement("span", {}, "hydrated component");
     };
 
-    const rehydrators = { [componentName]: rehydrator };
+    const hydrators = { [componentName]: hydrator };
     const documentElement = document.createElement("div");
 
-    documentElement.innerHTML = `<div data-rehydratable="test-${componentName}"></div>`;
+    documentElement.innerHTML = `<div data-hydratable="test-${componentName}"></div>`;
 
-    await reactFromHtml(documentElement, rehydrators, {
+    await reactFromHtml(documentElement, hydrators, {
       extra: {},
-      getQuerySelector: key => `[data-rehydratable*="${key}"]`,
+      getQuerySelector: key => `[data-hydratable*="${key}"]`,
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();
