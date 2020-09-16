@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`reactFromHtml E2E tests Should rehydrate a basic component 1`] = `"<div class=\\"rehydration-root\\"><span>rehydrated component</span></div>"`;
+exports[`reactFromHtml E2E tests Should hydrate a basic component 1`] = `"<div class=\\"hydration-root\\"><span>hydrated component</span></div>"`;
 
-exports[`reactFromHtml E2E tests Should rehydrate components with custom query selectors 1`] = `"<div class=\\"rehydration-root\\"><span>rehydrated component</span></div>"`;
+exports[`reactFromHtml E2E tests Should hydrate components with custom query selectors 1`] = `"<div class=\\"hydration-root\\"><span>hydrated component</span></div>"`;
 
-exports[`reactFromHtml E2E tests Should work for nested rehydratables 1`] = `
+exports[`reactFromHtml E2E tests Should work for nested hydratables 1`] = `
 "
-      <div class=\\"rehydration-root\\"><span>
-        <div class=\\"rehydration-root\\"><span>
+      <div class=\\"hydration-root\\"><span>
+        <div class=\\"hydration-root\\"><span>
           Hello, World!
         </span></div>
       </span></div>

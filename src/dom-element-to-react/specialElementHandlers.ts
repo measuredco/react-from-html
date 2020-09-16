@@ -26,7 +26,7 @@ const specialElementHandlers: ISpecialElementHandlers = {
     }
 
     // Use the DOM element properties instead of attributes. These may reflect
-    // changes the user has already made before we could rehydrate.
+    // changes the user has already made before we could hydrate.
     if ((el as HTMLInputElement).checked) {
       toReturn.defaultChecked = (el as HTMLInputElement).checked;
     }
@@ -59,7 +59,7 @@ const specialElementHandlers: ISpecialElementHandlers = {
     }
 
     // Use the DOM element properties instead of attributes. These may reflect
-    // changes the user has already made before we could rehydrate.
+    // changes the user has already made before we could hydrate.
     if ((el as HTMLSelectElement).value) {
       toReturn.defaultValue = (el as HTMLSelectElement).value;
     }
@@ -76,7 +76,7 @@ const specialElementHandlers: ISpecialElementHandlers = {
     }
 
     // Use the DOM element properties instead of attributes. These may reflect
-    // changes the user has already made before we could rehydrate.
+    // changes the user has already made before we could hydrate.
     if ((el as HTMLTextAreaElement).value) {
       toReturn.defaultValue = (el as HTMLTextAreaElement).value;
     }

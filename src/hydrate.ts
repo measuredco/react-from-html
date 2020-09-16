@@ -1,39 +1,39 @@
 import * as ReactDOM from "react-dom";
 
 import domElementToReact from "./dom-element-to-react";
+import IHydrator from "./IHydrator";
 import ILoadedOptions from "./ILoadedOptions";
 import IOptions from "./IOptions";
-import IRehydrator from "./IRehydrator";
 
-const rehydratableToReactElement = async (
+const hydratableToReactElement = async (
   el: Element,
-  rehydrators: IRehydrator,
+  hydrators: IHydrator,
   options: ILoadedOptions
 ): Promise<React.ReactElement<any>> => {
-  const rehydratorSelector = Object.keys(options.allSelectors).find(selector =>
+  const hydratorSelector = Object.keys(options.allSelectors).find(selector =>
     el.matches(selector)
   );
 
-  if (!rehydratorSelector) {
-    throw new Error("No rehydrator selector matched the element.");
+  if (!hydratorSelector) {
+    throw new Error("No hydrator selector matched the element.");
   }
 
-  const rehydratorName = options.allSelectors[rehydratorSelector];
+  const hydratorName = options.allSelectors[hydratorSelector];
 
-  if (!rehydratorName) {
-    throw new Error("Rehydrator name is missing from element.");
+  if (!hydratorName) {
+    throw new Error("Hydrator name is missing from element.");
   }
 
-  const rehydrator = rehydrators[rehydratorName];
+  const hydrator = hydrators[hydratorName];
 
-  if (!rehydrator) {
-    throw new Error(`No rehydrator found for type ${rehydratorName}`);
+  if (!hydrator) {
+    throw new Error(`No hydrator found for type ${hydratorName}`);
   }
 
-  return rehydrator(
+  return hydrator(
     el,
     async node => {
-      await rehydrate(node, rehydrators, options);
+      await hydrate(node, hydrators, options);
       return domElementToReact(node);
     },
     options.extra
@@ -41,7 +41,7 @@ const rehydratableToReactElement = async (
 };
 
 const createCustomHandler = (
-  rehydrators: IRehydrator,
+  hydrators: IHydrator,
   options: ILoadedOptions
 ) => async (node: Node) => {
   // This function will run on _every_ node that domElementToReact encounters.
@@ -50,7 +50,7 @@ const createCustomHandler = (
     node.nodeType === Node.ELEMENT_NODE &&
     (node as Element).matches(options.compoundSelector)
   ) {
-    return rehydratableToReactElement(node as Element, rehydrators, options);
+    return hydratableToReactElement(node as Element, hydrators, options);
   }
 
   return false;
@@ -64,51 +64,51 @@ const createReactRoot = (el: Node) => {
   }
 
   container.appendChild(el);
-  container.classList.add("rehydration-root");
+  container.classList.add("hydration-root");
 
   return container;
 };
 
-const rehydrateChildren = async (
+const hydrateChildren = async (
   el: Node,
-  rehydrators: IRehydrator,
+  hydrators: IHydrator,
   options: ILoadedOptions
 ) => {
   const container = createReactRoot(el);
 
   return {
     container,
-    rehydrated: await domElementToReact(
+    hydrated: await domElementToReact(
       container,
-      createCustomHandler(rehydrators, options)
+      createCustomHandler(hydrators, options)
     ),
   };
 };
 
 const render = ({
-  rehydrated,
+  hydrated,
   root,
 }: {
-  rehydrated?: React.ReactNode;
+  hydrated?: React.ReactNode;
   root?: Element;
 }) => {
-  if (!rehydrated || !root) {
+  if (!hydrated || !root) {
     return;
   }
 
-  // Unmount; it's possible that this was rehydrated previously.
+  // Unmount; it's possible that this was hydrated previously.
   ReactDOM.unmountComponentAtNode(root);
 
-  ReactDOM.render(rehydrated as React.ReactElement<any>, root);
+  ReactDOM.render(hydrated as React.ReactElement<any>, root);
 };
 
 const defaultGetQuerySelector = (key: string) => key;
 
 const createQuerySelectors = (
-  rehydratableIds: string[],
+  hydratableIds: string[],
   getQuerySelector: ((key: string) => string) = defaultGetQuerySelector
 ) => {
-  const allSelectors: { [key: string]: string } = rehydratableIds.reduce(
+  const allSelectors: { [key: string]: string } = hydratableIds.reduce(
     (acc, key) => ({ ...acc, [getQuerySelector(key)]: key }),
     {}
   );
@@ -124,13 +124,13 @@ const createQuerySelectors = (
   };
 };
 
-const rehydrate = async (
+const hydrate = async (
   container: Element,
-  rehydrators: IRehydrator,
+  hydrators: IHydrator,
   options: IOptions
 ) => {
   const { allSelectors, compoundSelector } = createQuerySelectors(
-    Object.keys(rehydrators),
+    Object.keys(hydrators),
     options.getQuerySelector
   );
 
@@ -151,7 +151,7 @@ const rehydrate = async (
     []
   );
 
-  // TODO: solve race condition when a second rehydrate runs
+  // TODO: solve race condition when a second hydrate runs
 
   const renders = [];
 
@@ -160,15 +160,16 @@ const rehydrate = async (
     if (container.contains(root)) {
       renders.push(async () => {
         try {
-          const {
-            container: rootContainer,
-            rehydrated,
-          } = await rehydrateChildren(root, rehydrators, loadedOptions);
+          const { container: rootContainer, hydrated } = await hydrateChildren(
+            root,
+            hydrators,
+            loadedOptions
+          );
 
-          return { root: rootContainer, rehydrated };
+          return { root: rootContainer, hydrated };
         } catch (e) {
           /* tslint:disable-next-line no-console */
-          console.error("Rehydration failure", e);
+          console.error("Hydration failure", e);
         }
 
         return {};
@@ -179,6 +180,6 @@ const rehydrate = async (
   await Promise.all(renders.map(r => r().then(render)));
 };
 
-export default rehydrate;
+export default hydrate;
 
-export { IRehydrator, rehydratableToReactElement };
+export { IHydrator, hydratableToReactElement };
