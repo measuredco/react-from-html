@@ -10,10 +10,10 @@ describe("reactFromHtml E2E tests", async () => {
       return React.createElement("span", {}, "rehydrated component");
     };
 
-    const rehydrators = { [componentName]: rehydrator };
+    const rehydrators = { [`.${componentName}`]: rehydrator };
     const documentElement = document.createElement("div");
 
-    documentElement.innerHTML = `<div data-rehydratable="${componentName}"></div>`;
+    documentElement.innerHTML = `<div class="${componentName}"></div>`;
 
     await reactFromHtml(documentElement, rehydrators, {
       extra: {},
@@ -27,7 +27,7 @@ describe("reactFromHtml E2E tests", async () => {
 
     const mockCall = jest.fn();
     const rehydrators = {
-      [componentName]: async (el, rehydrate) => {
+      [`.${componentName}`]: async (el, rehydrate) => {
         mockCall();
 
         return React.createElement("span", {}, await rehydrate(el));
@@ -37,8 +37,8 @@ describe("reactFromHtml E2E tests", async () => {
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-      <div data-rehydratable="${componentName}">
-        <div data-rehydratable="${componentName}">
+      <div class="${componentName}">
+        <div class="${componentName}">
           Hello, World!
         </div>
       </div>
@@ -62,11 +62,11 @@ describe("reactFromHtml E2E tests", async () => {
     const rehydrators = { [componentName]: rehydrator };
     const documentElement = document.createElement("div");
 
-    documentElement.innerHTML = `<div class="test-${componentName}"></div>`;
+    documentElement.innerHTML = `<div data-rehydratable="test-${componentName}"></div>`;
 
     await reactFromHtml(documentElement, rehydrators, {
       extra: {},
-      getQuerySelector: key => `.test-${key}`,
+      getQuerySelector: key => `[data-rehydratable*="${key}"]`,
     });
 
     expect(documentElement.innerHTML).toMatchSnapshot();

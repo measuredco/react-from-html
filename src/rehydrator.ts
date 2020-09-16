@@ -102,8 +102,7 @@ const render = ({
   ReactDOM.render(rehydrated as React.ReactElement<any>, root);
 };
 
-const defaultGetQuerySelector = (key: string) =>
-  `[data-rehydratable*="${key}"]`;
+const defaultGetQuerySelector = (key: string) => key;
 
 const createQuerySelectors = (
   rehydratableIds: string[],
