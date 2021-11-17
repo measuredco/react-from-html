@@ -131,7 +131,7 @@ const hydrate = async (
 ) => {
   const { allSelectors, compoundSelector } = createQuerySelectors(
     Object.keys(hydrators),
-    options.getQuerySelector
+    options.getQuerySelector || defaultGetQuerySelector
   );
 
   const loadedOptions: ILoadedOptions = {
