@@ -141,7 +141,7 @@ const ShowMore = ({ content }) => (
 ```jsx
 const ModalHydrator = async (el, hydrate) => (
   <Modal title={el.querySelector(".Modal-title").innerHTML}>
-    {hydrate(el.querySelector(".Modal-inner"))}
+    {await hydrate(el.querySelector(".Modal-inner"))}
   </Modal>
 );
 
