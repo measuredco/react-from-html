@@ -15,9 +15,7 @@ describe("reactFromHtml E2E tests", async () => {
 
     documentElement.innerHTML = `<div class="${componentName}"></div>`;
 
-    await reactFromHtml(documentElement, hydrators, {
-      extra: {},
-    });
+    await reactFromHtml(documentElement, hydrators);
 
     expect(documentElement.innerHTML).toMatchSnapshot();
   });
@@ -44,9 +42,7 @@ describe("reactFromHtml E2E tests", async () => {
       </div>
       `;
 
-    await reactFromHtml(documentElement, hydrators, {
-      extra: {},
-    });
+    await reactFromHtml(documentElement, hydrators);
 
     expect(documentElement.innerHTML).toMatchSnapshot();
     expect(mockCall).toBeCalledTimes(2);
