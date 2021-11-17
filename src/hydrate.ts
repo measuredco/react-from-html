@@ -5,6 +5,12 @@ import IHydrator from "./IHydrator";
 import ILoadedOptions from "./ILoadedOptions";
 import IOptions from "./IOptions";
 
+// Global ID
+let hydrationId = 1;
+
+// Global list of all items that have already been hydrated
+const alreadyHydrated: any = {};
+
 const hydratableToReactElement = async (
   el: Element,
   hydrators: IHydrator,
@@ -30,14 +36,27 @@ const hydratableToReactElement = async (
     throw new Error(`No hydrator found for type ${hydratorName}`);
   }
 
-  return hydrator(
+  const hydrated = await hydrator(
     el,
     async node => {
       await hydrate(node, hydrators, options);
-      return domElementToReact(node);
+      return domElementToReact(node, async (node: Node) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+          const el = node as Element;
+
+          // Don't statically hydrate elements that have already been hydrated
+          if (el.classList.contains("hydration-root")) {
+            return alreadyHydrated[el.getAttribute("data-hydration-id")!];
+          }
+        }
+
+        return false;
+      });
     },
     options.extra
   );
+
+  return hydrated;
 };
 
 const createCustomHandler = (
@@ -56,7 +75,7 @@ const createCustomHandler = (
   return false;
 };
 
-const createReactRoot = (el: Node) => {
+const createReactRoot = (el: Node, id: number) => {
   const container = document.createElement("div");
 
   if (el.parentNode) {
@@ -65,6 +84,7 @@ const createReactRoot = (el: Node) => {
 
   container.appendChild(el);
   container.classList.add("hydration-root");
+  container.setAttribute("data-hydration-id", `${id}`);
 
   return container;
 };
@@ -74,14 +94,19 @@ const hydrateChildren = async (
   hydrators: IHydrator,
   options: ILoadedOptions
 ) => {
-  const container = createReactRoot(el);
+  const id = hydrationId++;
+  const container = createReactRoot(el, id);
+
+  const hydrated = await domElementToReact(
+    container,
+    createCustomHandler(hydrators, options)
+  );
+
+  alreadyHydrated[id] = hydrated;
 
   return {
     container,
-    hydrated: await domElementToReact(
-      container,
-      createCustomHandler(hydrators, options)
-    ),
+    hydrated,
   };
 };
 

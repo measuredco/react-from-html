@@ -21,22 +21,25 @@ describe("reactFromHtml E2E tests", async () => {
   });
 
   it("Should work for nested hydratables", async () => {
-    const componentName: string = "mycomponentName";
-
     const mockCall = jest.fn();
     const hydrators = {
-      [`.${componentName}`]: async (el, hydrate) => {
+      [`.Parent`]: async (el, hydrate) => {
         mockCall();
 
         return React.createElement("span", {}, await hydrate(el));
+      },
+      [`.Child`]: async (el, hydrate) => {
+        mockCall();
+
+        return React.createElement("b", {}, await hydrate(el));
       },
     };
 
     const documentElement = document.createElement("div");
 
     documentElement.innerHTML = `
-      <div class="${componentName}">
-        <div class="${componentName}">
+      <div class="Parent">
+        <div class="Child">
           Hello, World!
         </div>
       </div>
