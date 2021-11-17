@@ -127,7 +127,7 @@ const createQuerySelectors = (
 const hydrate = async (
   container: Element,
   hydrators: IHydrator,
-  options: IOptions
+  options: IOptions = {}
 ) => {
   const { allSelectors, compoundSelector } = createQuerySelectors(
     Object.keys(hydrators),
@@ -137,7 +137,7 @@ const hydrate = async (
   const loadedOptions: ILoadedOptions = {
     allSelectors,
     compoundSelector,
-    extra: options.extra,
+    extra: options.extra || {},
   };
 
   const roots = Array.from(container.querySelectorAll(compoundSelector)).reduce(

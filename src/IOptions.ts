@@ -1,5 +1,5 @@
 interface IOptions {
-  extra: object;
+  extra?: object;
   getQuerySelector?: (key: string) => string;
 }
 
