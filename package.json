@@ -8,9 +8,6 @@
     "compile": "tsc",
     "cz": "git-cz",
     "format": "prettier **/*.js **/*.ts !**/lib/** --write",
-    "lint": "npm-run-all lint:*",
-    "lint:ts": "tslint -c tslint.json './packages/**/*.ts*(x)'",
-    "pretest": "npm-run-all lint",
     "test": "jest"
   },
   "devDependencies": {
@@ -28,9 +25,6 @@
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
     "ts-jest": "^23.1.4",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-plugin-prettier": "^2.0.1",
     "typescript": "^3.0.1"
   },
   "peerDependencies": {
