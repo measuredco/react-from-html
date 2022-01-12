@@ -59,21 +59,19 @@ const hydratableToReactElement = async (
   return hydrated;
 };
 
-const createCustomHandler = (
-  hydrators: IHydrator,
-  options: ILoadedOptions
-) => async (node: Node) => {
-  // This function will run on _every_ node that domElementToReact encounters.
-  // Make sure to keep the conditional highly performant.
-  if (
-    node.nodeType === Node.ELEMENT_NODE &&
-    (node as Element).matches(options.compoundSelector)
-  ) {
-    return hydratableToReactElement(node as Element, hydrators, options);
-  }
+const createCustomHandler =
+  (hydrators: IHydrator, options: ILoadedOptions) => async (node: Node) => {
+    // This function will run on _every_ node that domElementToReact encounters.
+    // Make sure to keep the conditional highly performant.
+    if (
+      node.nodeType === Node.ELEMENT_NODE &&
+      (node as Element).matches(options.compoundSelector)
+    ) {
+      return hydratableToReactElement(node as Element, hydrators, options);
+    }
 
-  return false;
-};
+    return false;
+  };
 
 const createReactRoot = (el: Node, id: number) => {
   const container = document.createElement("div");
@@ -131,7 +129,7 @@ const defaultGetQuerySelector = (key: string) => key;
 
 const createQuerySelectors = (
   hydratableIds: string[],
-  getQuerySelector: ((key: string) => string) = defaultGetQuerySelector
+  getQuerySelector: (key: string) => string = defaultGetQuerySelector
 ) => {
   const allSelectors: { [key: string]: string } = hydratableIds.reduce(
     (acc, key) => ({ ...acc, [getQuerySelector(key)]: key }),

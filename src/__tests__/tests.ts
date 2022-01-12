@@ -1,6 +1,7 @@
 /* eslint-env jest */
 import * as React from "react";
 import reactFromHtml from "..";
+import type IHydrator from "../IHydrator";
 
 describe("reactFromHtml E2E tests", async () => {
   it("Should hydrate a basic component", async () => {
@@ -22,8 +23,8 @@ describe("reactFromHtml E2E tests", async () => {
 
   it("Should work for nested hydratables", async () => {
     const mockCall = jest.fn();
-    const hydrators = {
-      [`.Parent`]: async (el, hydrate) => {
+    const hydrators: IHydrator = {
+      [`.Parent`]: async (el: Element, hydrate) => {
         mockCall();
 
         return React.createElement("span", {}, await hydrate(el));
