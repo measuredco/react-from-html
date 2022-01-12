@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "compile": "tsc",
-    "format": "prettier **/*.js **/*.ts !**/lib/** --write",
+    "format": "prettier **/*.{js,ts} !**/lib/** --write",
     "test": "jest"
   },
   "devDependencies": {
@@ -16,7 +16,7 @@
     "cz-conventional-changelog": "3.3.0",
     "gh-pages": "^3.2.3",
     "jest": "^23.5.0",
-    "prettier": "^1.15.3",
+    "prettier": "^2.5.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "ts-jest": "^23.10.5",
