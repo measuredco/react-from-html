@@ -2,6 +2,8 @@
 
 > Convert HTML into React components
 
+[![NPM](https://img.shields.io/npm/v/react-from-html.svg)](https://www.npmjs.com/package/react-from-json) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-prettier-brightgreen.svg)](https://prettier.io)
+
 ## Intro
 
 `react-from-html` allows you to convert _individual_ DOM nodes into React components. This means you can use React components in non-React contexts.
