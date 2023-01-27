@@ -2,7 +2,7 @@
 
 > Convert HTML into React components
 
-[![NPM](https://img.shields.io/npm/v/react-from-html.svg)](https://www.npmjs.com/package/react-from-json) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-prettier-brightgreen.svg)](https://prettier.io)
+[![NPM](https://img.shields.io/npm/v/react-from-html.svg)](https://www.npmjs.com/package/react-from-html) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-prettier-brightgreen.svg)](https://prettier.io)
 
 ## Intro
 
