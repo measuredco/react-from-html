@@ -161,4 +161,4 @@ This package is based on the excellent [react-from-markup](https://github.com/si
 
 ## LICENSE
 
-MIT
+MIT © [Measured Corporation Ltd](https://github.com/measuredco)
