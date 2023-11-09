@@ -20,6 +20,14 @@ to this:
 <ShowMore content="Hello, World!" />
 ```
 
+## Usecases
+
+Fundamentally, this project **allows HTML to be used as the authority of what's on the page.** This can be useful when:
+
+* Writing component libraries in React that can be consumed via HTML
+* Integrating into a drag and drop CMS
+* Supporting third-party A/B testing and personalization tools
+
 ## Quick Start
 
 Install
